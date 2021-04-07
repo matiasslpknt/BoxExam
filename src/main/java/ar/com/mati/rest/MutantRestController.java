@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This class basically determines if a DNA chain is mutant or not
+ * @author: Matias Augusto Manzanelli
+ * @see <a href = "https://github.com/matiasslpknt/BoxExam.git" />
+ */
+
 @RestController
 @RequestMapping(value = Constantes.URL_MUTANTS)
 public class MutantRestController {
@@ -23,6 +29,11 @@ public class MutantRestController {
     @Autowired
     private IMutantBusiness mutantBusiness;
 
+    /**
+     * determines if a DNA matrix is mutant or not
+     * @param dna DnaDTO object that contains the string list that represents the DNA matrix
+     * @return boolean if the chain is mutant, false if not
+     */
     @PostMapping(value = {""}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> add(@RequestBody DnaDTO dna) {
         try {

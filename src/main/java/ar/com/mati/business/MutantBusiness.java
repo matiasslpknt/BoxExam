@@ -2,13 +2,22 @@ package ar.com.mati.business;
 
 import ar.com.mati.business.exception.BusinessException;
 import ar.com.mati.model.DnaDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+/**
+ * This class basically determines if a DNA chain is mutant or not
+ * @author: Matias Augusto Manzanelli
+ * @see <a href = "https://github.com/matiasslpknt/BoxExam.git" />
+ */
 
 @Service
 public class MutantBusiness implements IMutantBusiness {
 
+    /**
+     * Determines if a DNA chain is mutant or not
+     * @param DNAString has a list of DNA chains
+     * @return boolean true if is mutant, false if not
+     */
     @Override
     public boolean isMutant(DnaDTO DNAString) throws BusinessException {
         int size = DNAString.getDna().length;
@@ -24,6 +33,12 @@ public class MutantBusiness implements IMutantBusiness {
         return false;
     }
 
+    /**
+     * Searches vertical and horizontaly if the DNA matrix is mutant or not
+     * @param DNAString DNA matrix
+     * @param DNATranspose DNA transpone matrix
+     * @return boolean true if is mutant, false if not
+     */
     public boolean searchHorizontalAndVerticalMutant(char[][] DNAString, char[][] DNATranspose) {
         int size = DNAString.length;
         for (int i = 0; i < size; i++) {
@@ -37,19 +52,28 @@ public class MutantBusiness implements IMutantBusiness {
         return false;
     }
 
-//    public boolean searchVerticalMutant(char[][] DNAString) {
-//        char[][] matrixT = transpose(DNAString);
-//        return searchHorizontalMutant(matrixT);
-//    }
-
+    /**
+     * Searches in all permited DNA matrix diagonals if its mutant or not
+     * @param DNAString DNA matrix
+     * @param DNATranspose DNA transpone matrix
+     * @param DNAAntiTranspose DNA antitranspone matrix
+     * @return boolean true if is mutant, false if not
+     */
     public boolean searchDiagonalMutant(char[][] DNAString, char[][] DNATranspose, char[][] DNAAntiTranspose) {
-        if (upperDiagRight(DNAString, DNATranspose, DNAAntiTranspose) || upperDiagLeft(DNAString)) {
+        if (leftToRightDiagonal(DNAString, DNATranspose, DNAAntiTranspose) || rightToLeftDiagonal(DNAString)) {
             return true;
         }
         return false;
     }
 
-    public boolean upperDiagRight(char[][] matrix1, char[][] matrix2, char[][] matrix3) {
+    /**
+     * Searches in all permited DNA matrix diagonals if its mutant or not starting from top left corner to bottom right corner
+     * @param matrix1 DNA matrix
+     * @param matrix2 DNA transpone matrix
+     * @param matrix3 DNA antitranspose matrix
+     * @return boolean true if is mutant, false if not
+     */
+    public boolean leftToRightDiagonal(char[][] matrix1, char[][] matrix2, char[][] matrix3) {
         int size = matrix1.length;
         for (int i = 0; i < size - 3; i++) {
             String finalString1 = "";
@@ -76,21 +100,12 @@ public class MutantBusiness implements IMutantBusiness {
         return false;
     }
 
-//    public boolean lowerDiagRight(char[][] matrix) {
-//        for (int i = 0; i < matrix.length - 3; i++) {
-//            String finalString = "";
-//            for (int j = 0; j < matrix.length - i; j++) {
-//                finalString += matrix[j + i][j];
-//            }
-//            char[] dna = finalString.toCharArray();
-//            if (searchRepeatedCharacters(dna)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
-    public boolean upperDiagLeft(char[][] matrix1) {
+    /**
+     * Searches in all permited DNA matrix diagonals if its mutant or not starting from top right corner to bottom left corner
+     * @param matrix1 DNA matrix
+     * @return boolean true if is mutant, false if not
+     */
+    public boolean rightToLeftDiagonal(char[][] matrix1) {
         int size = matrix1.length;
         for (int j = 0; j < size - 3; j++) {
             String finalString1 = "";
@@ -105,6 +120,11 @@ public class MutantBusiness implements IMutantBusiness {
         return false;
     }
 
+    /**
+     * Searches 4 repeated characters consecutively in a char array
+     * @param string DNA chain
+     * @return boolean true if it foundS 4 reapeted characters consecutively, false if not
+     */
     public boolean searchRepeatedCharacters(char[] string) {
         int size = string.length;
         int cont = 0;
@@ -127,6 +147,11 @@ public class MutantBusiness implements IMutantBusiness {
         return false;
     }
 
+    /**
+     * traspose a matrix
+     * @param DNAString DNA matrix
+     * @return char[][] transposed matrix
+     */
     public char[][] transpose(char[][] DNAString) {
         int size = DNAString.length;
         char[][] matrixT = new char[size][size];
@@ -138,6 +163,11 @@ public class MutantBusiness implements IMutantBusiness {
         return matrixT;
     }
 
+    /**
+     * antitraspose a matrix
+     * @param matrix DNA matrix
+     * @return char[][] antitransposed matrix
+     */
     public char[][] antiTranspose(char[][] matrix) {
         int size = matrix.length;
         char[][] matrixT = new char[size][size];
@@ -159,6 +189,10 @@ public class MutantBusiness implements IMutantBusiness {
         return matrixT;
     }
 
+    /**
+     * prints a matrix for debugging
+     * @param matrix matrix
+     */
     public void printMatrix(char[][] matrix) {
         System.out.println("######################################################");
         for (int i = 0; i < matrix.length; i++) {

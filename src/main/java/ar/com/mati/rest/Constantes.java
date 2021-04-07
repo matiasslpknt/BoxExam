@@ -1,5 +1,11 @@
 package ar.com.mati.rest;
 
+/**
+ * This class contains de basic URL's used
+ * @author: Matias Augusto Manzanelli
+ * @see <a href = "https://github.com/matiasslpknt/BoxExam.git" />
+ */
+
 public final class Constantes {
 
 	public static final String URL_API = "/api";

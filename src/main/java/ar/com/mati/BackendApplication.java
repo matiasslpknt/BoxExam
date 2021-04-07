@@ -9,6 +9,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
+/**
+ * Main class
+ * @author: Matias Augusto Manzanelli
+ * @see <a href = "https://github.com/matiasslpknt/BoxExam.git" />
+ */
+
 @SpringBootApplication
 public class BackendApplication extends SpringBootServletInitializer implements CommandLineRunner {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
